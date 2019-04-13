@@ -1,0 +1,15 @@
+development:
+  driver: sqlite3
+  open: ./tstore_development.db
+
+test:
+  driver: sqlite3
+  open: ./tstore_test.db
+
+staging:
+  driver: sqlite3
+  open: ./tstore_staging.db
+
+production:
+  driver: sqlite3
+  open: ./tstore_production.db

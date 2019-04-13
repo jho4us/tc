@@ -1,0 +1,13 @@
+un:
+  deadline: 5m
+  issues-exit-code: 1
+linters:
+  enable-all: true
+  disable:
+    - errcheck
+    - gochecknoglobals
+    - lll
+    - unparam
+issues:
+  exclude:
+    - a blank import should be only in a main or test package
