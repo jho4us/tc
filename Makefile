@@ -59,3 +59,7 @@ coverage:
 	go test -coverprofile=build/coverage.out ./...
 	go tool cover -func=build/coverage.out
 	go tool cover -html=build/coverage.out
+
+install: build
+	install $(BUILD_OUTPUT_DIR)/tc $(GOPATH)/bin
+	install db-config-docker.json $(GOPATH)/bin

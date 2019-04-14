@@ -1,15 +1,15 @@
 development:
   driver: mysql
-  open: root@tcp(localhost:3306)/tstore_development?parseTime=true
+  open: root:tc-demo@tcp(localhost:3306)/tstore_dev?parseTime=true
 
 test:
   driver: mysql
-  open: root@tcp(localhost:3306)/tstore_test?parseTime=true
+  open: root:tc-demo@tcp(localhost:3306)/tstore_test?parseTime=true
 
 staging:
   driver: mysql
-  open: root@tcp(localhost:3306)/tstore_staging?parseTime=true
+  open: root:tc-demo@tcp(localhost:3306)/tstore_staging?parseTime=true
 
 production:
   driver: mysql
-  open: root@tcp(localhost:3306)/tstore_production?parseTime=true
+  open: root:tc-demo@tcp(localhost:3306)/tstore_production?parseTime=true

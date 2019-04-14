@@ -14,11 +14,11 @@ Currently supported:
 ### Use goose to start and terminate a MySQL DB
 To start a MySQL using goose:
 
-    goose -path $GOPATH/src/ispringsolutions/tc/testdb/mysql up
+    goose -path $GOPATH/src/github.com/jho4us/tc/testdb/mysql up
 
 To tear down a MySQL DB using goose
 
-    goose -path $GOPATH/src/ispringsolutions/tc/testdb/mysql down
+    goose -path $GOPATH/src/github.com/jho4us/tc/testdb/mysql down
 
 Note: the administration of MySQL DB is not included. We assume
 the databases being connected to are already created and access control
@@ -27,11 +27,11 @@ is properly handled.
 ### Use goose to start and terminate a SQLite DB
 To start a SQLite DB using goose:
 
-    goose -path $GOPATH/src/ispringsolutions/tc/testdb/sqlite up
+    goose -path $GOPATH/src/github.com/jho4us/tc/testdb/sqlite up
 
 To tear down a SQLite DB using goose
 
-    goose -path $GOPATH/src/ispringsolutions/tc/testdb/sqlite down
+    goose -path $GOPATH/src/github.com/jho4us/tc/testdb/sqlite down
 
 ## DB Configuration
 
@@ -42,4 +42,4 @@ JSON dictionary:
 
 or
 
-    {"driver":"mysql","data_source":"user:password@tcp(hostname:3306)/db?parseTime=true"}
+    {"driver":"mysql","data_source":"user:password@tcp(localhost:3306)/tstore_dev?parseTime=true"}

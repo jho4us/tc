@@ -40,7 +40,7 @@ UPDATE tests
 
 	deleteSQL = `
 DELETE FROM tests
-	WHERE (id = $1);`
+	WHERE (id = ?);`
 )
 
 // Accessor implements testdb.Accessor interface.
