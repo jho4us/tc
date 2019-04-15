@@ -13,70 +13,31 @@ This section groups Test Constructor tests resources.
 A Test is central object utilized by the Test constructor API. Tests are closely tied to the follow graph...
 
 + Parameters
-    + id: `1` (string) - The id of the Test.
+    + id: `0221FD76-B549-45A1-81E9-A807E09C926B` - The id of the Test.
 
 + Model (application/json)
 
     ```js
     {
         "data": {
-            "id": "1", // note this is a string
-            "user": {
-                ...
-            },
-            "created_at": "2012-07-16T17:25:47Z",
-            "text": "@berg FIRST post on this new site #newsocialnetwork",
-            "html": "<span itemprop=\"mention\" data-mention-name=\"berg\" data-mention-id=\"2\">@berg</span> FIRST post on <a href=\"https://join.app.net\" rel=\"nofollow\">this new site</a> <span itemprop=\"hashtag\" data-hashtag-name=\"newsocialnetwork\">#newsocialnetwork</span>.",
-            "source": {
-                "client_id": "udxGzAVBdXwGtkHmvswR5MbMEeVnq6n4",
-                "name": "Clientastic for iOS",
-                "link": "http://app.net"
-            },
-            "machine_only": false,
-            "reply_to": null,
-            "thread_id": "1",
-            "num_replies": 3,
-            "num_reposts": 0,
-            "num_stars": 0,
-            "entities": {
-                "mentions": [{
-                    "name": "berg",
-                    "id": "2",
-                    "pos": 0,
-                    "len": 5
-                }],
-                "hashtags": [{
-                    "name": "newsocialnetwork",
-                    "pos": 34,
-                    "len": 17
-                }],
-                "links": [{
-                    "text": "this new site",
-                    "url": "https://join.app.net"
-                    "pos": 20,
-                    "len": 13
-                }]
-            },
-            "you_reposted": false,
-            "you_starred": false
-        },
-        "meta": {
-            "code": 200,
+            "id": "0221FD76-B549-45A1-81E9-A807E09C926B",
+            "name": "Test name",
+            "content": "Test content",
         }
     }
     ```
 
 ### Retrieve a Test [GET]
-Returns a specific Post.
+Returns a specific Test.
 
-+ Response 200
++ Response 200 (application/json)
 
-    [Test][]
+        [Test][]
 
 ### Delete a Test [DELETE]
 Delete a Test.
 
-+ Response 204
++ Response 200
 
 ## Tests Collection [/tc/v1/tests]
 A Collection of tests.
@@ -85,37 +46,37 @@ A Collection of tests.
 
     ```js
     {
-        "data": [
+        "tests": [
             {
-                "id": "1", // note this is a string
+                "id": "0221FD76-B549-45A1-81E9-A807E09C926B",
                 ...
             },
             {
-                "id": "2",
+                "id": "0221FD76-B549-45A1-81E9-A807E09C926C",
                 ...
             },
             {
-                "id": "3",
+                "id": "0221FD76-B549-45A1-81E9-A807E09C926D",
                 ...
             },
         ],
-        "meta": {
-            "code": 200,
-        }
     }
     ```
 
 ### Create a Test [POST]
-Create a new Test object. Mentions and hashtags will be parsed out of the post
-text, as will bare URLs...
+Create a new Test object.
 
-+ Request
++ Request (application/json)
 
-    [Test][]
+    + Attributes
 
-+ Response 201
+        + name: Test name (required)
 
-    [Test][]
++ Response 200
+
+    + Attributes
+
+        + id: Test id
 
 ### Retrieve all Tests [GET]
 Retrieves all tests.
