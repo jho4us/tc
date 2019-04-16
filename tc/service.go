@@ -10,16 +10,16 @@ import (
 // Service is the interface that provides test contructor methods.
 type Service interface {
 	// CreateTest registers a new empty test in the system
-	CreateTest(name string) (test.TID, error)
+	CreateTest(name string) (test.ID, error)
 
 	// LoadTest returns a read model of a test.
-	LoadTest(id test.TID) (Test, error)
+	LoadTest(id test.ID) (Test, error)
 
 	// PutTest update test contents
 	PutTest(t *Test) error
 
 	// DeleteTest delete test from a system.
-	DeleteTest(id test.TID) error
+	DeleteTest(id test.ID) error
 
 	// Tests returns a list of all tests in a system.
 	Tests() []Test
@@ -29,7 +29,7 @@ type service struct {
 	tests test.Repository
 }
 
-func (s *service) CreateTest(name string) (test.TID, error) {
+func (s *service) CreateTest(name string) (test.ID, error) {
 	newName := strings.TrimSpace(name)
 	if len(newName) == 0 {
 		return "", test.ErrInvalidArgument
@@ -46,12 +46,12 @@ func (s *service) CreateTest(name string) (test.TID, error) {
 	return id, nil
 }
 
-func (s *service) LoadTest(id test.TID) (Test, error) {
+func (s *service) LoadTest(id test.ID) (Test, error) {
 	if id == "" {
 		return Test{}, test.ErrInvalidArgument
 	}
 
-	t, err := s.tests.Find(test.TID(strings.ToUpper(string(id))))
+	t, err := s.tests.Find(test.ID(strings.ToUpper(string(id))))
 	if err != nil {
 		return Test{}, err
 	}
@@ -63,7 +63,7 @@ func (s *service) PutTest(t *Test) error {
 	if t == nil || t.ID == "" {
 		return test.ErrInvalidArgument
 	}
-	tu := test.New(test.TID(t.ID), t.Name, t.Content)
+	tu := test.New(test.ID(t.ID), t.Name, t.Content)
 	_, err := s.tests.Store(tu)
 
 	if err != nil {
@@ -73,12 +73,12 @@ func (s *service) PutTest(t *Test) error {
 	return nil
 }
 
-func (s *service) DeleteTest(id test.TID) error {
+func (s *service) DeleteTest(id test.ID) error {
 	if id == "" {
 		return test.ErrInvalidArgument
 	}
 
-	return s.tests.Delete(test.TID(strings.ToUpper(string(id))))
+	return s.tests.Delete(test.ID(strings.ToUpper(string(id))))
 }
 
 func (s *service) Tests() []Test {

@@ -37,7 +37,7 @@ func TestTransport(t *testing.T) {
 	testDeleteHandler(id, h, t)
 }
 
-func testCreateHandler(h http.Handler, t *testing.T) test.TID {
+func testCreateHandler(h http.Handler, t *testing.T) test.ID {
 	body := &Test{
 		Name:    "Aaaa",
 		Content: "Bbbb",
@@ -92,7 +92,7 @@ func testCreateHandler(h http.Handler, t *testing.T) test.TID {
 	return ct.ID
 }
 
-func testPutHandler(id test.TID, h http.Handler, t *testing.T) {
+func testPutHandler(id test.ID, h http.Handler, t *testing.T) {
 	body := &Test{
 		ID:      string(id),
 		Name:    "Ccc",
@@ -141,7 +141,7 @@ func testPutHandler(id test.TID, h http.Handler, t *testing.T) {
 
 }
 
-func testDeleteHandler(id test.TID, h http.Handler, t *testing.T) {
+func testDeleteHandler(id test.ID, h http.Handler, t *testing.T) {
 	req, err := http.NewRequest("DELETE", fmt.Sprintf("/tc/v1/tests/%s", id), nil)
 	if err != nil {
 		t.Fatal(err)
@@ -156,7 +156,7 @@ func testDeleteHandler(id test.TID, h http.Handler, t *testing.T) {
 	}
 }
 
-func testGetHandler(s Service, h http.Handler, t *testing.T, id test.TID) {
+func testGetHandler(s Service, h http.Handler, t *testing.T, id test.ID) {
 	tt := []struct {
 		routePath  string
 		shouldPass bool

@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestCore(t *testing.T) {
-	tr := New(TID("aaa"), "bbb", "ccc")
+func TestNew(t *testing.T) {
+	tr := New(ID("aaa"), "bbb", "ccc")
 	if tr.ID != "aaa" || tr.Name != "bbb" || tr.Content != "ccc" {
 		t.Errorf("structure data doesnt match")
 	}

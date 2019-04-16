@@ -23,7 +23,7 @@ func NewInstrumentingService(counter metrics.Counter, latency metrics.Histogram,
 	}
 }
 
-func (s *instrumentingService) CreateTest(name string) (test.TID, error) {
+func (s *instrumentingService) CreateTest(name string) (test.ID, error) {
 	defer func(begin time.Time) {
 		s.requestCount.With("method", "create").Add(1)
 		s.requestLatency.With("method", "create").Observe(time.Since(begin).Seconds())
@@ -32,7 +32,7 @@ func (s *instrumentingService) CreateTest(name string) (test.TID, error) {
 	return s.Service.CreateTest(name)
 }
 
-func (s *instrumentingService) LoadTest(id test.TID) (Test, error) {
+func (s *instrumentingService) LoadTest(id test.ID) (Test, error) {
 	defer func(begin time.Time) {
 		s.requestCount.With("method", "load").Add(1)
 		s.requestLatency.With("method", "load").Observe(time.Since(begin).Seconds())
@@ -50,7 +50,7 @@ func (s *instrumentingService) PutTest(t *Test) error {
 	return s.Service.PutTest(t)
 }
 
-func (s *instrumentingService) DeleteTest(id test.TID) error {
+func (s *instrumentingService) DeleteTest(id test.ID) error {
 	defer func(begin time.Time) {
 		s.requestCount.With("method", "delete").Add(1)
 		s.requestLatency.With("method", "delete").Observe(time.Since(begin).Seconds())

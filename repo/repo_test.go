@@ -35,7 +35,7 @@ func TestRepo(t *testing.T) {
 	testGetTests(tr, t)
 }
 
-func testInsertTestAndGetTest(tr test.Repository, t *testing.T, postfix int) test.TID {
+func testInsertTestAndGetTest(tr test.Repository, t *testing.T, postfix int) test.ID {
 	if postfix == 0 {
 		testTruncateAll(tr, t)
 	}

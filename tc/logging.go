@@ -18,7 +18,7 @@ func NewLoggingService(logger log.Logger, s Service) Service {
 	return &loggingService{logger, s}
 }
 
-func (s *loggingService) CreateTest(name string) (id test.TID, err error) {
+func (s *loggingService) CreateTest(name string) (id test.ID, err error) {
 	defer func(begin time.Time) {
 		_ = s.logger.Log(
 			"method", "create",
@@ -30,7 +30,7 @@ func (s *loggingService) CreateTest(name string) (id test.TID, err error) {
 	return s.Service.CreateTest(name)
 }
 
-func (s *loggingService) LoadTest(id test.TID) (t Test, err error) {
+func (s *loggingService) LoadTest(id test.ID) (t Test, err error) {
 	defer func(begin time.Time) {
 		_ = s.logger.Log(
 			"method", "load",
@@ -58,7 +58,7 @@ func (s *loggingService) PutTest(t *Test) (err error) {
 	return s.Service.PutTest(t)
 }
 
-func (s *loggingService) DeleteTest(id test.TID) (err error) {
+func (s *loggingService) DeleteTest(id test.ID) (err error) {
 	defer func(begin time.Time) {
 		_ = s.logger.Log(
 			"method", "delete",

@@ -13,8 +13,8 @@ type createTestRequest struct {
 }
 
 type createTestResponse struct {
-	ID  test.TID `json:"id,omitempty"`
-	Err error    `json:"error,omitempty"`
+	ID  test.ID `json:"id,omitempty"`
+	Err error   `json:"error,omitempty"`
 }
 
 func (r createTestResponse) error() error { return r.Err }
@@ -28,7 +28,7 @@ func makeCreateTestEndpoint(s Service) endpoint.Endpoint {
 }
 
 type loadTestRequest struct {
-	ID test.TID
+	ID test.ID
 }
 
 type loadTestResponse struct {
@@ -65,7 +65,7 @@ func makePutTestEndpoint(s Service) endpoint.Endpoint {
 }
 
 type deleteTestRequest struct {
-	ID test.TID
+	ID test.ID
 }
 
 type deleteTestResponse struct {

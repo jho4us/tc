@@ -9,24 +9,24 @@ import (
 )
 
 type testRepository struct {
-	Accessor testdb.Accessor
+	accessor testdb.Accessor
 }
 
-func (r *testRepository) Store(t *test.Test) (test.TID, error) {
+func (r *testRepository) Store(t *test.Test) (test.ID, error) {
 	if t == nil {
 		return "", test.ErrInvalidArgument
 	}
 	if len(t.ID) == 0 {
-		id, err := r.Accessor.InsertTest(testdb.TestRecord{
+		id, err := r.accessor.InsertTest(testdb.TestRecord{
 			Name:    t.Name,
 			Content: t.Content,
 		})
 		if err != nil {
 			return "", err
 		}
-		return test.TID(id), nil
+		return test.ID(id), nil
 	}
-	err := r.Accessor.UpsertTest(testdb.TestRecord{
+	err := r.accessor.UpsertTest(testdb.TestRecord{
 		ID:      string(t.ID),
 		Name:    t.Name,
 		Content: t.Content,
@@ -37,11 +37,11 @@ func (r *testRepository) Store(t *test.Test) (test.TID, error) {
 	return t.ID, nil
 }
 
-func (r *testRepository) Find(id test.TID) (*test.Test, error) {
+func (r *testRepository) Find(id test.ID) (*test.Test, error) {
 	if len(id) == 0 {
 		return nil, test.ErrInvalidArgument
 	}
-	rets, err := r.Accessor.GetTest(string(id))
+	rets, err := r.accessor.GetTest(string(id))
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (r *testRepository) Find(id test.TID) (*test.Test, error) {
 		return nil, test.ErrUnknown
 	}
 	t := &test.Test{
-		ID:      test.TID(rets[0].ID),
+		ID:      test.ID(rets[0].ID),
 		Name:    rets[0].Name,
 		Content: rets[0].Content,
 	}
@@ -57,7 +57,7 @@ func (r *testRepository) Find(id test.TID) (*test.Test, error) {
 }
 
 func (r *testRepository) FindAll() ([]*test.Test, error) {
-	rets, err := r.Accessor.GetTests()
+	rets, err := r.accessor.GetTests()
 	if err != nil {
 		t := make([]*test.Test, 0)
 		return t, err
@@ -65,7 +65,7 @@ func (r *testRepository) FindAll() ([]*test.Test, error) {
 	t := make([]*test.Test, 0, len(rets))
 	for _, val := range rets {
 		t = append(t, &test.Test{
-			ID:      test.TID(val.ID),
+			ID:      test.ID(val.ID),
 			Name:    val.Name,
 			Content: val.Content,
 		})
@@ -73,11 +73,11 @@ func (r *testRepository) FindAll() ([]*test.Test, error) {
 	return t, nil
 }
 
-func (r *testRepository) Delete(id test.TID) error {
+func (r *testRepository) Delete(id test.ID) error {
 	if len(id) == 0 {
 		return test.ErrInvalidArgument
 	}
-	return r.Accessor.DeleteTest(string(id))
+	return r.accessor.DeleteTest(string(id))
 }
 
 // NewTestRepository returns a new instance of a tests repository.
@@ -88,6 +88,6 @@ func NewTestRepository(path string) (test.Repository, error) {
 	}
 	accessor := sql.NewAccessor(db)
 	return &testRepository{
-		Accessor: accessor,
+		accessor: accessor,
 	}, nil
 }

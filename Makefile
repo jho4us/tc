@@ -8,6 +8,10 @@ mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 mkfile_dir := $(dir $(mkfile_path))
 ORG_PATH="ispringsolutions"
 REPO_PATH="${ORG_PATH}/tc"
+STATIC_LD_FLAGS=
+ifdef STATIC
+STATIC_LD_FLAGS := -w -s
+endif
 
 all: build test doc
 
@@ -19,8 +23,8 @@ ensure: install_build_tools
 build: install_build_tools
 	$(GOPATH)/bin/dep ensure
 	mkdir -p $(BUILD_OUTPUT_DIR)
-	CGO_ENABLED=1 go build -v \
-	        -ldflags "-X $(VERSION_PKG).REVISION=$(REVISION) -X $(VERSION_PKG).REPOSITORY=$(REPOSITORY)" \
+	go build -v \
+	        -ldflags "-X $(VERSION_PKG).REVISION=$(REVISION) -X $(VERSION_PKG).REPOSITORY=$(REPOSITORY) $(STATIC_LD_FLAGS)" \
             -o $(MAIN_BINARY) \
             cmd/main.go
 

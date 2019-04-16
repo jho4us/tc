@@ -39,7 +39,7 @@ func TestService(t *testing.T) {
 	testUpdateAndGetTest(tcs, t)
 }
 
-func testInsertTestAndGetTest(s Service, t *testing.T, postfix int) test.TID {
+func testInsertTestAndGetTest(s Service, t *testing.T, postfix int) test.ID {
 	if postfix == 0 {
 		testTruncateAll(s, t)
 	}
@@ -75,7 +75,7 @@ func testInsertTestAndGetTest(s Service, t *testing.T, postfix int) test.TID {
 func testTruncateAll(s Service, t *testing.T) {
 	rets := s.Tests()
 	for _, val := range rets {
-		err := s.DeleteTest(test.TID(val.ID))
+		err := s.DeleteTest(test.ID(val.ID))
 		if err != nil {
 			t.Fatal(err)
 		}

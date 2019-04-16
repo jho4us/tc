@@ -55,11 +55,11 @@ func MakeHandler(tcs Service, logger kitlog.Logger) http.Handler {
 
 	r := mux.NewRouter()
 
-	r.Handle("/tc/v1/tests", createTestHandler).Methods("POST")
-	r.Handle("/tc/v1/tests", listTestsHandler).Methods("GET")
-	r.Handle("/tc/v1/tests/{id}", loadTestHandler).Methods("GET")
-	r.Handle("/tc/v1/tests/{id}", putTestHandler).Methods("POST")
-	r.Handle("/tc/v1/tests/{id}", deleteTestHandler).Methods("DELETE")
+	r.Handle("/tc/v1/tests", createTestHandler).Methods(http.MethodPost)
+	r.Handle("/tc/v1/tests", listTestsHandler).Methods(http.MethodGet)
+	r.Handle("/tc/v1/tests/{id}", loadTestHandler).Methods(http.MethodGet)
+	r.Handle("/tc/v1/tests/{id}", putTestHandler).Methods(http.MethodPost)
+	r.Handle("/tc/v1/tests/{id}", deleteTestHandler).Methods(http.MethodDelete)
 
 	return r
 }
@@ -89,7 +89,7 @@ func decodeLoadTestRequest(_ context.Context, r *http.Request) (interface{}, err
 	if !ok {
 		return nil, errBadRoute
 	}
-	return loadTestRequest{ID: test.TID(id)}, nil
+	return loadTestRequest{ID: test.ID(id)}, nil
 }
 
 func decodePutTestRequest(_ context.Context, r *http.Request) (interface{}, error) {
@@ -116,7 +116,7 @@ func decodeDeleteTestRequest(_ context.Context, r *http.Request) (interface{}, e
 	if !ok {
 		return nil, errBadRoute
 	}
-	return deleteTestRequest{ID: test.TID(id)}, nil
+	return deleteTestRequest{ID: test.ID(id)}, nil
 }
 
 func decodeListTestsRequest(_ context.Context, r *http.Request) (interface{}, error) {
