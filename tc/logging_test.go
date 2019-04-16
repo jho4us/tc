@@ -3,14 +3,12 @@ package tc
 import (
 	"github.com/go-kit/kit/log"
 
-	"github.com/jho4us/tc/repo"
-
 	"os"
 	"testing"
 )
 
 func TestLogging(t *testing.T) {
-	rep, err := repo.NewTestRepository("../repo/repo-tst-config.json")
+	rep, err := testCreateTestRepo(t)
 	if err != nil {
 		t.Fatal(err)
 	}

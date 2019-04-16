@@ -1,8 +1,6 @@
 package tc
 
 import (
-	"github.com/jho4us/tc/repo"
-
 	"testing"
 
 	kitprometheus "github.com/go-kit/kit/metrics/prometheus"
@@ -10,7 +8,7 @@ import (
 )
 
 func TestInstrumenting(t *testing.T) {
-	rep, err := repo.NewTestRepository("../repo/repo-tst-config.json")
+	rep, err := testCreateTestRepo(t)
 	if err != nil {
 		t.Fatal(err)
 	}

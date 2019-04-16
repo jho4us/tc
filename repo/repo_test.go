@@ -3,17 +3,19 @@ package repo
 import (
 	"fmt"
 
+	"github.com/jho4us/tc/testdb/dbconf"
+
 	"github.com/jho4us/tc/test"
 
 	"testing"
 )
 
 func TestRepo(t *testing.T) {
-	_, err := NewTestRepository("nonexistent")
+	_, err := NewTestRepository(nil)
 	if err == nil {
 		t.Fatal(err)
 	}
-	tr, err := NewTestRepository("./repo-tst-config.json")
+	tr, err := testCreateTestRepo(t)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -21,9 +23,20 @@ func TestRepo(t *testing.T) {
 	if err == nil {
 		t.Fatal(err)
 	}
+	_, err = tr.Store(&test.Test{
+		Name:    "",
+		Content: "",
+	})
+	if err == nil {
+		t.Fatal(err)
+	}
 	_, err = tr.Find("")
 	if err == nil {
 		t.Fatal(err)
+	}
+	_, err = tr.Find("nonexistent")
+	if err == nil {
+		t.Errorf("test %s should not be found", "nonexistent")
 	}
 	err = tr.Delete("")
 	if err == nil {
@@ -33,6 +46,18 @@ func TestRepo(t *testing.T) {
 	testInsertTestAndGetTest(tr, t, 0)
 	testUpdateAndGetTest(tr, t)
 	testGetTests(tr, t)
+}
+
+func testCreateTestRepo(t *testing.T) (test.Repository, error) {
+	db, err := dbconf.DBFromConfig("./repo-tst-config.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	tr, err := NewTestRepository(db)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return tr, nil
 }
 
 func testInsertTestAndGetTest(tr test.Repository, t *testing.T, postfix int) test.ID {

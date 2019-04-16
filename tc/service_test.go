@@ -5,12 +5,16 @@ import (
 
 	"github.com/jho4us/tc/repo"
 	"github.com/jho4us/tc/test"
+	"github.com/jho4us/tc/testdb/dbconf"
 
 	"testing"
 )
 
 func TestService(t *testing.T) {
-	rep, err := repo.NewTestRepository("../repo/repo-tst-config.json")
+	rep, err := testCreateTestRepo(t)
+	if err != nil {
+		t.Fatal(err)
+	}
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -37,6 +41,18 @@ func TestService(t *testing.T) {
 	}
 	testInsertTestAndGetTest(tcs, t, 0)
 	testUpdateAndGetTest(tcs, t)
+}
+
+func testCreateTestRepo(t *testing.T) (test.Repository, error) {
+	db, err := dbconf.DBFromConfig("./../repo/repo-tst-config.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	tr, err := repo.NewTestRepository(db)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return tr, nil
 }
 
 func testInsertTestAndGetTest(s Service, t *testing.T, postfix int) test.ID {

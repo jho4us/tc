@@ -2,9 +2,10 @@
 package repo
 
 import (
+	"github.com/jmoiron/sqlx"
+
 	"github.com/jho4us/tc/test"
 	"github.com/jho4us/tc/testdb"
-	"github.com/jho4us/tc/testdb/dbconf"
 	"github.com/jho4us/tc/testdb/sql"
 )
 
@@ -81,10 +82,9 @@ func (r *testRepository) Delete(id test.ID) error {
 }
 
 // NewTestRepository returns a new instance of a tests repository.
-func NewTestRepository(path string) (test.Repository, error) {
-	db, err := dbconf.DBFromConfig(path)
-	if err != nil {
-		return nil, err
+func NewTestRepository(db *sqlx.DB) (test.Repository, error) {
+	if db == nil {
+		return nil, test.ErrInvalidArgument
 	}
 	accessor := sql.NewAccessor(db)
 	return &testRepository{

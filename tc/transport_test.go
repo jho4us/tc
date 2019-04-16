@@ -7,7 +7,6 @@ import (
 
 	"github.com/go-kit/kit/log"
 
-	"github.com/jho4us/tc/repo"
 	"github.com/jho4us/tc/test"
 
 	"net/http"
@@ -18,7 +17,7 @@ import (
 )
 
 func TestTransport(t *testing.T) {
-	rep, err := repo.NewTestRepository("../repo/repo-tst-config.json")
+	rep, err := testCreateTestRepo(t)
 	if err != nil {
 		t.Fatal(err)
 	}

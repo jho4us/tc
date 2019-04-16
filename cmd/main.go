@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/jho4us/tc/testdb/dbconf"
+
 	"github.com/jho4us/tc/handlers"
 	"github.com/jho4us/tc/repo"
 	"github.com/jho4us/tc/tc"
@@ -52,7 +54,12 @@ func main() {
 
 	var tests test.Repository
 
-	tests, err = repo.NewTestRepository(*dbConfig)
+	db, err := dbconf.DBFromConfig(*dbConfig)
+	if err != nil {
+		panic(err)
+	}
+
+	tests, err = repo.NewTestRepository(db)
 	if err != nil {
 		panic(err)
 	}

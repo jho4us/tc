@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/jho4us/tc/test"
 	"github.com/jho4us/tc/testdb"
 
 	"github.com/jmoiron/sqlx"
@@ -82,10 +83,13 @@ func (d *Accessor) InsertTest(tr testdb.TestRecord) (id string, err error) {
 	if len(id) == 0 {
 		id = strings.ToUpper(uuid.New())
 	}
-
+	newName := strings.TrimSpace(tr.Name)
+	if len(newName) == 0 {
+		return "", test.ErrInvalidArgument
+	}
 	res, err := d.db.NamedExec(insertSQL, &testdb.TestRecord{
 		ID:      id,
-		Name:    tr.Name,
+		Name:    newName,
 		Content: tr.Content,
 	})
 	if err != nil {
